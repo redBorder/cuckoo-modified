@@ -15,6 +15,8 @@ class UploadHdfs(Report):
             # Pig processing
             id_task = path.split("/")[-1]
             os.system("pig -param PATH=/user/cuckoo/%s/reports/report.json /opt/rb/var/rb-sequence-oozie/workflow/scripts/cuckoo_slowloader.pig 2> /dev/null" % id_task)
+            # Uncomment the following line if you want removing local report
+            os.system("rm -rf %s" % path)
         except (UnicodeError, TypeError, IOError) as e:
             raise CuckooReportError("Failed to generate HDFSUpload report: %s" % e)
 
